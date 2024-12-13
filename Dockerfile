@@ -17,6 +17,7 @@ RUN \
   else echo "Lockfile not found." && exit 1; \
   fi
 
+RUN pnpm add -g pm2
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -63,4 +64,4 @@ ENV PORT=3000
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
 ENV HOSTNAME="0.0.0.0"
-CMD ["node", "server.js"]
+CMD ["pm2-runtime", "-i", "max", "server.js"]
