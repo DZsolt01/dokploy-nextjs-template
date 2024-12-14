@@ -13,7 +13,6 @@ WORKDIR /app
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
-RUN pnpm add -g pm2
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -52,7 +51,11 @@ ENV NODE_ENV=production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+RUN pnpm add -g pm2
+
 COPY --from=builder /app/public ./public
+
+COPY --from=builder /app/ecosystem.config.js ./ecosystem.config.js
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
@@ -63,4 +66,4 @@ USER nextjs
 
 # server.js is created by next build from the standalone output
 # https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD ["pnpm", "start"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
