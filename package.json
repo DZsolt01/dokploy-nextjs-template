@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "pm2 start && pm2-runtime ecosystem.config.js",
+    "start": "next start",
     "lint": "next lint",
     "preinstall": "npx only-allow pnpm"
   },
