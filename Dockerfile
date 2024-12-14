@@ -64,6 +64,5 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD ["pm2-runtime", "ecosystem.config.js"]
+# Módosítsuk a CMD-t, hogy a server.js-t futtassa
+CMD ["pm2-runtime", "server.js"]
