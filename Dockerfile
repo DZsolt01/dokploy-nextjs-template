@@ -65,4 +65,4 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 USER nextjs
 
 # Módosítsuk a CMD-t, hogy a server.js-t futtassa
-CMD ["pm2-runtime", "server.js"]
+CMD ["pm2-runtime", "-i", "max", "server.js"]
